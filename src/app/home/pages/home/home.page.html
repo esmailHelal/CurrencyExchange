@@ -1,0 +1,11 @@
+
+<h3 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl pt-3 px-8">Currency Exchanger</h3>
+<app-sticky-panel>
+    
+</app-sticky-panel>
+
+<div class="grid grid-cols-3 gap-3 px-8">
+<app-most-popular-currency *ngFor="let item of arrayMostPopular" [valueTo]="item.to" [defaultValueTo]="item.rate" >
+
+</app-most-popular-currency>
+</div>

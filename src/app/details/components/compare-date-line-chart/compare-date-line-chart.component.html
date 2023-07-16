@@ -1,0 +1,197 @@
+
+
+  <div class="bg-white flex flex-col px-6 w-full h-full rounded-2xl" *ngIf="compareMonthData && !isLoadingCompareMoth">
+   
+  
+    <div class="w-full mt-3">
+      <svg
+        data-testid="salesTrendsChart"
+        [attr.viewBox]="getViewBox()"
+        class="svg"
+        style="overflow: visible"
+      >
+        <g
+          [attr.transform]="transformTranslateX"
+          fill="none"
+          text-anchor="middle"
+          data-testid="xAxis"
+        >
+          <g
+            *ngFor="let xAxisValue of xAxisValues; let i = index"
+            opacity="1"
+            [attr.transform]="transformTranslateXValues(xAxisValue, i)"
+            data-testid="xAxisTick"
+          >
+            <line
+              *ngIf="
+                xAxisValues.indexOf(xAxisValue) === 0 ||
+                xAxisValues.indexOf(xAxisValue) === xAxisValues.length - 1
+              "
+              stroke="lightgray"
+              [attr.y2]="getY()"
+            ></line>
+            <text
+              fill="currentColor"
+              y="9"
+              [attr.font-size]="fontSize"
+              dy="0.71em"
+            >
+              {{ xAxisValue  }}
+            </text>
+          </g>
+        </g>
+        <g
+          [attr.transform]="transformTranslateY"
+          fill="none"
+          text-anchor="end"
+          data-testid="yAxis"
+        >
+          <g
+            *ngFor="let yAxisValue of yAxisValues; let i = index"
+            opacity="1"
+            [attr.transform]="transfromTranslateYValues(yAxisValue)"
+            data-testid="yAxisTick"
+          >
+            <line x2="-6"></line>
+            <line
+              [attr.x2]="getX()"
+              stroke="lightgray"
+              stroke-dasharray="8"
+            ></line>
+            <text
+              fill="currentColor"
+              [attr.font-size]="fontSize"
+              [attr.x]="yAxisLabels()"
+              dy="0.32em"
+            >
+              {{ yAxisValue  }}
+            </text>
+          </g>
+
+         <!--  <text
+            class="text-ga-gray-500"
+            [attr.transform]="yTitleTransform"
+            fill="currentColor"
+            text-anchor="end"
+            data-testid="salesLabel"
+            [attr.font-size]="labelFontSize"
+          >
+            Rate
+          </text> -->
+        </g>
+
+        <g
+          *ngIf="xAxisValues.length === 1"
+          [attr.transform]="
+            transformCircle(compareMonthData.firstPeriodData[0].y)
+          "
+        >
+          <circle
+            class="first-circle"
+            r="3"
+            [attr.stroke]="getColor('first')"
+            fill="none"
+            stroke-width="2px"
+          ></circle>
+        </g>
+     
+        <g>
+          <g *ngFor="let salesTrendChart of salesTrendCharts">
+            <path
+              class="line"
+              fill="none"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              [attr.stroke]="getColor(salesTrendChart)"
+              [attr.d]="getPath(salesTrendChart)"
+              data-testid="salesTrendsPath"
+            ></path>
+          </g>
+        </g>
+        <g>
+          <path
+            *ngIf="isTooltipVisible"
+            class="mouse-line"
+            [attr.d]="lineMovement()"
+            stroke="#109fff"
+            stroke-width="2px"
+            stroke-dasharray="6 3"
+          ></path>
+          <g [attr.transform]="transformMousePerLine('first')">
+            <circle
+              class="first-circle"
+              *ngIf="isTooltipVisible && tooltip"
+              r="3"
+              [attr.stroke]="getColor('first')"
+              fill="none"
+              stroke-width="2px"
+            ></circle>
+          </g>
+         
+          <g [attr.transform]="transformMousePerLine('arrow')">
+            <polygon
+              points="5,-10 -5,-10 0,0"
+              *ngIf="isTooltipVisible && tooltip"
+              fill="#4d6076"
+            ></polygon>
+          </g>
+          <g [attr.transform]="transformMousePerLine()">
+            <g *ngIf="isTooltipVisible && tooltip">
+              <rect
+                [attr.transform]="tooltipTransform(5, -30)"
+                [attr.width]="tooltipWidth"
+                [attr.height]="tooltipHeight"
+                fill="#4d6076"
+                rx="5"
+              ></rect>
+              <circle
+                *ngIf="tooltip.firstPeriodDate"
+                r="2"
+                [attr.fill]="getColor('first')"
+                [attr.transform]="tooltipTransform(12, -22)"
+              ></circle>
+              <text
+                *ngIf="tooltip.firstPeriodDate"
+                [attr.transform]="tooltipTransform(20, -18)"
+                [attr.font-size]="toolTipFontSize"
+                fill="white"
+              >
+                {{ tooltip?.firstPeriodDate }}:
+              </text>
+              <text
+                *ngIf="tooltip.firstPeriodDate"
+                [attr.transform]="
+                  tooltipTransform(
+                    25 + tooltipLabelPadding * tooltip?.firstPeriodDate?.length || 10,
+                    -18
+                  )
+                "
+                class="font-bold"
+                [attr.font-size]="toolTipFontSize"
+                fill="white"
+              >
+                {{ tooltip?.firstPeriodSales }}
+               
+              </text>
+             
+            </g>
+          </g>
+          <rect
+            [attr.width]="getWidth()"
+            (mouseout)="mouseout()"
+            (mouseover)="mouseover()"
+            (mousemove)="mousemove($event)"
+            (touchstart)="mouseover()"
+            (touchend)="mouseout()"
+            (touchmove)="mousemove($event)"
+            [attr.x]="isSmWidth || isMdWidth ? marginLeftSm : marginLeftLg"
+            [attr.height]="height"
+            fill="none"
+            pointer-events="all"
+          ></rect>
+        </g>
+      </svg>
+    </div>
+  </div>
+

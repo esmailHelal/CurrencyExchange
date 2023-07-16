@@ -1,0 +1,28 @@
+<div class="flex justify-between gap-2 px-8 max-xs:flex-col" >
+   
+<h3 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl pt-3 "> {{this.selectedValueFrom}} : {{symbol}}</h3>
+
+<button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full w-contian my-4" (click)="goToHome()">
+    Back To Home
+</button>
+
+</div>
+
+
+<app-sticky-panel
+#StickyPanelComponent
+[amountValue]="amountValue"
+[selectedValueFrom]="selectedValueFrom"
+[selectedValueTo]="selectedValueTo"
+[totalResult]="totalResult"
+[hidden]="hidden"
+(currencyChange)="initChart()"
+>
+    
+</app-sticky-panel>
+<div class="mt-5">
+    <ga-compare-date-line-chart
+      [compareMonth]="compareDateChart"
+      [isLoadingCompareMoth]="isLoadingCompareMoth"
+    ></ga-compare-date-line-chart>
+</div>
