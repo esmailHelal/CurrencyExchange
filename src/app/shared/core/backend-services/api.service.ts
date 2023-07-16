@@ -18,12 +18,12 @@ export class ApiService {
 
   getSymbolsList(): Observable<SymbolsResponce> {
     return this.http.get<SymbolsResponce>(
-      `${this.api}/symbols?access_key=522ada1957f68c5fc110860fbe9fff85`
+      `${this.api}/symbols?access_key=86e744ebdf50a7df91727b512c4b09f1`
     );
   }
   getRate(from: string, to: string): Observable<RateResponce> {
     return this.http.get<RateResponce>(
-      `${this.api}/latest?access_key=522ada1957f68c5fc110860fbe9fff85&base=${from}&symbols=${to}`
+      `${this.api}/latest?access_key=86e744ebdf50a7df91727b512c4b09f1&base=${from}&symbols=${to}`
     );
   }
 
@@ -33,7 +33,7 @@ export class ApiService {
     amount: number
   ): Observable<ConvertResponce> {
     return this.http.get<ConvertResponce>(
-      `${this.api}/convert?access_key=522ada1957f68c5fc110860fbe9fff85&from=${from}&to=${to}&amount=${amount}`
+      `${this.api}/convert?access_key=86e744ebdf50a7df91727b512c4b09f1&from=${from}&to=${to}&amount=${amount}`
     );
   }
 
@@ -43,7 +43,7 @@ export class ApiService {
     date: string
   ): Observable<HistroicResponce> {
     return this.http.get<HistroicResponce>(
-      `${this.api}/${date}?access_key=522ada1957f68c5fc110860fbe9fff85&base=${from}&symbols=${to}`
+      `${this.api}/${date}?access_key=86e744ebdf50a7df91727b512c4b09f1&base=${from}&symbols=${to}`
     );
   }
   
@@ -51,7 +51,7 @@ export class ApiService {
     symbols: string
   ): Observable<RateResponce> {
     return this.http.get<RateResponce>(
-      `${this.api}/latest?access_key=522ada1957f68c5fc110860fbe9fff85&base=EUR&symbols=${symbols}`
+      `${this.api}/latest?access_key=86e744ebdf50a7df91727b512c4b09f1&base=EUR&symbols=${symbols}`
     );
   }
 
